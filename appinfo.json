@@ -1,0 +1,24 @@
+{
+    "appKeys": {},
+    "capabilities": [
+        ""
+    ],
+    "companyName": "binary125@yahoo.com",
+    "longName": "Hourly Background Changed",
+    "projectType": "native",
+    "resources": {
+        "media": []
+    },
+    "sdkVersion": "3",
+    "shortName": "Hourly Background ",
+    "targetPlatforms": [
+        "aplite",
+        "basalt"
+    ],
+    "uuid": "265228ff-f19d-49df-9542-b6f5c999fd85",
+    "versionCode": 1,
+    "versionLabel": "1.0",
+    "watchapp": {
+        "watchface": true
+    }
+}
