@@ -2,12 +2,15 @@
   
 static Window *s_main_window;
 static TextLayer *s_time_layer;
+int current_hour;
 
 
 static void update_time() {
   // Get a tm structure
   time_t temp = time(NULL); 
   struct tm *tick_time = localtime(&temp);
+  
+  current_hour = tick_time->tm_hour;
 
   // Create a long-lived buffer
   static char buffer[] = "00:00";
@@ -26,9 +29,40 @@ static void update_time() {
 }
 
 static void tick_handler_hour(struct tm *tick_time) {
-    int theNum = tick_time->tm_hour;
-    // int i = hour % 12
-    // int theNum = tick_time->tm_min;
+    //int theNum = tick_time->tm_hour;
+    int theNum = tick_time->tm_min;
+    if ( theNum != current_hour){
+      vibes_short_pulse();
+    }
+
+#ifdef PBL_COLOR   
+    int i = theNum % 12;
+    if (i == 0){
+        window_set_background_color(s_main_window,  GColorWhite );  
+    }else if ( i == 1){
+        window_set_background_color(s_main_window,  GColorCyan);  
+    }else if ( i  == 2){
+        window_set_background_color(s_main_window, GColorIcterine  );  
+    }else if ( i == 3){
+        window_set_background_color(s_main_window, GColorRajah  );  
+    }else if ( i == 4){
+        window_set_background_color(s_main_window, GColorLightGray  );  
+    }else if ( i == 5){
+        window_set_background_color(s_main_window, GColorMintGreen  );  
+    }else if ( i == 6){
+        window_set_background_color(s_main_window, GColorElectricBlue  );  
+    }else if ( i == 7){
+        window_set_background_color(s_main_window, GColorLiberty   );  
+    }else if ( i == 8){
+        window_set_background_color(s_main_window, GColorVividCerulean   );  
+    }else if ( i == 9){
+        window_set_background_color(s_main_window, GColorMelon   );  
+    }else if ( i == 10){
+       window_set_background_color(s_main_window, GColorClear  );  
+    }else if ( i == 11){
+       window_set_background_color(s_main_window, GColorBlueMoon   );  
+    }      
+#else
     int i = theNum % 2;
     if (i == 0){
         window_set_background_color(s_main_window, GColorWhite);
@@ -37,32 +71,7 @@ static void tick_handler_hour(struct tm *tick_time) {
         window_set_background_color(s_main_window, GColorBlack );
         text_layer_set_text_color(s_time_layer, GColorWhite);      
     }  
-    //int i = minute % 12;
-    //if (i == 0){
-    //    text_layer_set_background_color(s_time_layer,  GColorClear );  
-    //}else if ( i == 1){
-    //    text_layer_set_background_color(s_time_layer, GColorWhite  );  
-    //}else if ( i  == 2){
-    //    text_layer_set_background_color(s_time_layer, GColorClear );  
-    //}else if ( i == 3){
-    //    text_layer_set_background_color(s_time_layer, GColorWhite );  
-    //}else if ( i == 4){
-    //    text_layer_set_background_color(s_time_layer, GColorClear );  
-    //}else if ( i == 5){
-    //    text_layer_set_background_color(s_time_layer, GColorWhite );  
-    //}else if ( i == 6){
-    //    text_layer_set_background_color(s_time_layer, GColorClear );  
-    //}else if ( i == 7){
-    //    text_layer_set_background_color(s_time_layer, GColorWhite  );  
-    //}else if ( i == 8){
-    //    text_layer_set_background_color(s_time_layer, GColorClear  );  
-    //}else if ( i == 9){
-    //    text_layer_set_background_color(s_time_layer, GColorWhite  );  
-    //}else if ( i == 10){
-     //   text_layer_set_background_color(s_time_layer, GColorClear  );  
-    //}else if ( i == 11){
-    //    text_layer_set_background_color(s_time_layer, GColorWhite  );  
-    //}    
+#endif
 }
 
 static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
